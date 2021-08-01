@@ -1,25 +1,28 @@
 {% extends "blogs/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+    <h1>Gabriel's Blog</h1>
+{% endblock page_header %}
 
 {% block content %}
-    <head>
-        <p>Gabriel's Blog</p>
-    </head>
     <body>
     <ul>
         {% for blogpost in blogposts %}
-            <li>
-                <p><a href="{% url 'blogs:edit_blogpost' blogpost.id %}">
-                    {{ blogpost.title|default:"Without title" }}
-                </a></p>
-                <p>{{ blogpost.text }}</p>
-                <p>{{ blogpost.date_added }}</p>
-            </li>
+            <h3><p><a href="{% url 'blogs:edit_blogpost' blogpost.id %}">
+                {{ blogpost.title|default:"Without title" }}
+            </a></p></h3>
+            <p>
+                {{ blogpost.text }}
+            </p>
+            <div class="card-body"><p>
+                {{ blogpost.date_added|date:'M d, Y H:i' }}
+            </p></div>
         {% empty %}
-            <li>
+            <p>
                 There are no blog posts...sadly
-            </li>
+            </p>
         {% endfor %}
     </ul>
-    <a href="{% url 'blogs:new_blogpost' %}">Add a new blogpost</a>
     </body>
 {% endblock content %}
